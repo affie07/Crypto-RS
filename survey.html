@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PIER</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link href="css/survey.css" rel="stylesheet">
+        <script>
+            function preSubmit(){
+                let fields = ['amount', 'risk', 'horizon'];
+                let uid = localStorage.getItem('uid');
+                for (i = 0; i < 2; ++i){
+                    if (document.getElementById(fields[i]).value == '0'){
+                        alert('Please answer all the questions');
+                        return false;
+                    }
+                }
+                document.getElementById("uid").value = uid;
+                document.getElementById("f1").style = "display:none";
+                document.getElementById("wait-img").style = "display:block";
+                document.getElementById("wait-msg").style = "display:block";
+                return true;
+            }
+        </script>
+    </head>
+    <body>
+        <div class="outer">
+        <div class="middle">
+        <div class="inner">
+            <img id="wait-img" src="img/loading.gif">
+            <p id="wait-msg" class="lead">Please Wait while we generate Recommendations for You . . .</p>
+            <form id="f1" action="result" method="POST">
+                <h2>{{message}}</h2>
+                <div class="mb-3">
+                    <label class="form-label lead">How much do you plan to invest in USD?</label>
+                    <select class="form-select" name="amount" id="amount">
+                        <option selected value="0">Please Select</option>
+                        <option value="5000">Less than $5,000</option>
+                        <option value="50000">$5,000 - $50,000</option>
+                        <option value="500000">$50,000 - $500,000</option>
+                        <option value="1000000">More than $500,000</option>
+                    </select>
+                    <label class="form-label lead">How would you describe your risk tolerance?</label>
+                    <select class="form-select" name="risk" id="risk">
+                        <option selected value="0">Please Select</option>
+                        <option value="-0.1">I can tolerate a drawdown of 10%</option>
+                        <option value="-0.25">I can tolerate a drawdown of 25%</option>
+                        <option value="-0.5">I can tolerate a drawdown of 50%</option>
+                        <option value="-1">Maximize expected return regardless of risk</option>
+                    </select> 
+                    <label class="form-label lead">How long would your Investment Last?</label>
+                    <select class="form-select" name="horizon" id="horizon">
+                        <option selected value="0">Please Select</option>
+                        <option value="week">Less than a week</option>
+                        <option value="month">A few weeks</option>
+                        <option value="season">A few months</option>
+                        <option value="year">More than a year</option>
+                    </select>
+                    
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="return preSubmit()">Submit</button>
+                <input type="hidden" name="id" id="uid">
+            </form>
+        </div>
+        </div>
+        </div> 
+    </body>
+</html>
